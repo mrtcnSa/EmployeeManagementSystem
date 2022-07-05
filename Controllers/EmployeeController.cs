@@ -10,7 +10,7 @@ namespace EmployeeManagementSystem.Controllers
 {
     public class EmployeeController : Controller
     {
-        EmployeeEntities db = new EmployeeEntities();
+        EmployeeManagementSystemEntities db = new EmployeeManagementSystemEntities();
         GenericRepository<TblEmployee> gr = new GenericRepository<TblEmployee>();
         GenericRepository<TblJobPosition> job = new GenericRepository<TblJobPosition>();
         GenericRepository<TblDepartment> dep = new GenericRepository<TblDepartment>();
