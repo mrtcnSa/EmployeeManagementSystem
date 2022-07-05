@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EmployeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TblDepartment">
+    <Key>
+      <PropertyRef Name="IDDepartment" />
+    </Key>
+    <Property Name="IDDepartment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TblEmployee">
+    <Key>
+      <PropertyRef Name="IDEmployee" />
+    </Key>
+    <Property Name="IDEmployee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Salary" Type="money" Nullable="false" />
+    <Property Name="IDDepartment" Type="int" />
+    <Property Name="IDJobPosition" Type="int" />
+    <Property Name="Birthday" Type="date" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TblJobPosition">
+    <Key>
+      <PropertyRef Name="IDJobPosition" />
+    </Key>
+    <Property Name="IDJobPosition" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JobPosition" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TblProject">
+    <Key>
+      <PropertyRef Name="IDProject" />
+    </Key>
+    <Property Name="IDProject" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IDEmployee" Type="int" />
+  </EntityType>
+  <Association Name="FK_TblEmployee_TblDepartment">
+    <End Role="TblDepartment" Type="Self.TblDepartment" Multiplicity="0..1" />
+    <End Role="TblEmployee" Type="Self.TblEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblDepartment">
+        <PropertyRef Name="IDDepartment" />
+      </Principal>
+      <Dependent Role="TblEmployee">
+        <PropertyRef Name="IDDepartment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TblEmployee_TblJobPosition">
+    <End Role="TblJobPosition" Type="Self.TblJobPosition" Multiplicity="0..1" />
+    <End Role="TblEmployee" Type="Self.TblEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblJobPosition">
+        <PropertyRef Name="IDJobPosition" />
+      </Principal>
+      <Dependent Role="TblEmployee">
+        <PropertyRef Name="IDJobPosition" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TblProject_TblEmployee">
+    <End Role="TblEmployee" Type="Self.TblEmployee" Multiplicity="0..1" />
+    <End Role="TblProject" Type="Self.TblProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblEmployee">
+        <PropertyRef Name="IDEmployee" />
+      </Principal>
+      <Dependent Role="TblProject">
+        <PropertyRef Name="IDEmployee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EmployeeModelStoreContainer">
+    <EntitySet Name="TblDepartment" EntityType="Self.TblDepartment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblEmployee" EntityType="Self.TblEmployee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblJobPosition" EntityType="Self.TblJobPosition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TblProject" EntityType="Self.TblProject" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TblEmployee_TblDepartment" Association="Self.FK_TblEmployee_TblDepartment">
+      <End Role="TblDepartment" EntitySet="TblDepartment" />
+      <End Role="TblEmployee" EntitySet="TblEmployee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TblEmployee_TblJobPosition" Association="Self.FK_TblEmployee_TblJobPosition">
+      <End Role="TblJobPosition" EntitySet="TblJobPosition" />
+      <End Role="TblEmployee" EntitySet="TblEmployee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TblProject_TblEmployee" Association="Self.FK_TblProject_TblEmployee">
+      <End Role="TblEmployee" EntitySet="TblEmployee" />
+      <End Role="TblProject" EntitySet="TblProject" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

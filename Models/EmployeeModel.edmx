@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EmployeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TblDepartment">
+          <Key>
+            <PropertyRef Name="IDDepartment" />
+          </Key>
+          <Property Name="IDDepartment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblEmployee">
+          <Key>
+            <PropertyRef Name="IDEmployee" />
+          </Key>
+          <Property Name="IDEmployee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salary" Type="money" Nullable="false" />
+          <Property Name="IDDepartment" Type="int" />
+          <Property Name="IDJobPosition" Type="int" />
+          <Property Name="Birthday" Type="date" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblJobPosition">
+          <Key>
+            <PropertyRef Name="IDJobPosition" />
+          </Key>
+          <Property Name="IDJobPosition" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobPosition" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblProject">
+          <Key>
+            <PropertyRef Name="IDProject" />
+          </Key>
+          <Property Name="IDProject" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IDEmployee" Type="int" />
+        </EntityType>
+        <Association Name="FK_TblEmployee_TblDepartment">
+          <End Role="TblDepartment" Type="Self.TblDepartment" Multiplicity="0..1" />
+          <End Role="TblEmployee" Type="Self.TblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblDepartment">
+              <PropertyRef Name="IDDepartment" />
+            </Principal>
+            <Dependent Role="TblEmployee">
+              <PropertyRef Name="IDDepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblEmployee_TblJobPosition">
+          <End Role="TblJobPosition" Type="Self.TblJobPosition" Multiplicity="0..1" />
+          <End Role="TblEmployee" Type="Self.TblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblJobPosition">
+              <PropertyRef Name="IDJobPosition" />
+            </Principal>
+            <Dependent Role="TblEmployee">
+              <PropertyRef Name="IDJobPosition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblProject_TblEmployee">
+          <End Role="TblEmployee" Type="Self.TblEmployee" Multiplicity="0..1" />
+          <End Role="TblProject" Type="Self.TblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblEmployee">
+              <PropertyRef Name="IDEmployee" />
+            </Principal>
+            <Dependent Role="TblProject">
+              <PropertyRef Name="IDEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeModelStoreContainer">
+          <EntitySet Name="TblDepartment" EntityType="Self.TblDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblEmployee" EntityType="Self.TblEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblJobPosition" EntityType="Self.TblJobPosition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblProject" EntityType="Self.TblProject" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TblEmployee_TblDepartment" Association="Self.FK_TblEmployee_TblDepartment">
+            <End Role="TblDepartment" EntitySet="TblDepartment" />
+            <End Role="TblEmployee" EntitySet="TblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblEmployee_TblJobPosition" Association="Self.FK_TblEmployee_TblJobPosition">
+            <End Role="TblJobPosition" EntitySet="TblJobPosition" />
+            <End Role="TblEmployee" EntitySet="TblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblProject_TblEmployee" Association="Self.FK_TblProject_TblEmployee">
+            <End Role="TblEmployee" EntitySet="TblEmployee" />
+            <End Role="TblProject" EntitySet="TblProject" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EmployeeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TblDepartment" EntityType="EmployeeModel.TblDepartment" />
+          <EntitySet Name="TblEmployee" EntityType="EmployeeModel.TblEmployee" />
+          <EntitySet Name="TblJobPosition" EntityType="EmployeeModel.TblJobPosition" />
+          <EntitySet Name="TblProject" EntityType="EmployeeModel.TblProject" />
+          <AssociationSet Name="FK_TblEmployee_TblDepartment" Association="EmployeeModel.FK_TblEmployee_TblDepartment">
+            <End Role="TblDepartment" EntitySet="TblDepartment" />
+            <End Role="TblEmployee" EntitySet="TblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblEmployee_TblJobPosition" Association="EmployeeModel.FK_TblEmployee_TblJobPosition">
+            <End Role="TblJobPosition" EntitySet="TblJobPosition" />
+            <End Role="TblEmployee" EntitySet="TblEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TblProject_TblEmployee" Association="EmployeeModel.FK_TblProject_TblEmployee">
+            <End Role="TblEmployee" EntitySet="TblEmployee" />
+            <End Role="TblProject" EntitySet="TblProject" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="TblDepartment">
+          <Key>
+            <PropertyRef Name="IDDepartment" />
+          </Key>
+          <Property Name="IDDepartment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TblEmployee" Relationship="EmployeeModel.FK_TblEmployee_TblDepartment" FromRole="TblDepartment" ToRole="TblEmployee" />
+        </EntityType>
+        <EntityType Name="TblEmployee">
+          <Key>
+            <PropertyRef Name="IDEmployee" />
+          </Key>
+          <Property Name="IDEmployee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Salary" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="IDDepartment" Type="Int32" />
+          <Property Name="IDJobPosition" Type="Int32" />
+          <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="TblDepartment" Relationship="EmployeeModel.FK_TblEmployee_TblDepartment" FromRole="TblEmployee" ToRole="TblDepartment" />
+          <NavigationProperty Name="TblJobPosition" Relationship="EmployeeModel.FK_TblEmployee_TblJobPosition" FromRole="TblEmployee" ToRole="TblJobPosition" />
+          <NavigationProperty Name="TblProject" Relationship="EmployeeModel.FK_TblProject_TblEmployee" FromRole="TblEmployee" ToRole="TblProject" />
+        </EntityType>
+        <EntityType Name="TblJobPosition">
+          <Key>
+            <PropertyRef Name="IDJobPosition" />
+          </Key>
+          <Property Name="IDJobPosition" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobPosition" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TblEmployee" Relationship="EmployeeModel.FK_TblEmployee_TblJobPosition" FromRole="TblJobPosition" ToRole="TblEmployee" />
+        </EntityType>
+        <EntityType Name="TblProject">
+          <Key>
+            <PropertyRef Name="IDProject" />
+          </Key>
+          <Property Name="IDProject" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDEmployee" Type="Int32" />
+          <NavigationProperty Name="TblEmployee" Relationship="EmployeeModel.FK_TblProject_TblEmployee" FromRole="TblProject" ToRole="TblEmployee" />
+        </EntityType>
+        <Association Name="FK_TblEmployee_TblDepartment">
+          <End Type="EmployeeModel.TblDepartment" Role="TblDepartment" Multiplicity="0..1" />
+          <End Type="EmployeeModel.TblEmployee" Role="TblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblDepartment">
+              <PropertyRef Name="IDDepartment" />
+            </Principal>
+            <Dependent Role="TblEmployee">
+              <PropertyRef Name="IDDepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblEmployee_TblJobPosition">
+          <End Type="EmployeeModel.TblJobPosition" Role="TblJobPosition" Multiplicity="0..1" />
+          <End Type="EmployeeModel.TblEmployee" Role="TblEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblJobPosition">
+              <PropertyRef Name="IDJobPosition" />
+            </Principal>
+            <Dependent Role="TblEmployee">
+              <PropertyRef Name="IDJobPosition" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TblProject_TblEmployee">
+          <End Type="EmployeeModel.TblEmployee" Role="TblEmployee" Multiplicity="0..1" />
+          <End Type="EmployeeModel.TblProject" Role="TblProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TblEmployee">
+              <PropertyRef Name="IDEmployee" />
+            </Principal>
+            <Dependent Role="TblProject">
+              <PropertyRef Name="IDEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeModelStoreContainer" CdmEntityContainer="EmployeeEntities">
+          <EntitySetMapping Name="TblDepartment">
+            <EntityTypeMapping TypeName="EmployeeModel.TblDepartment">
+              <MappingFragment StoreEntitySet="TblDepartment">
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="IDDepartment" ColumnName="IDDepartment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblEmployee">
+            <EntityTypeMapping TypeName="EmployeeModel.TblEmployee">
+              <MappingFragment StoreEntitySet="TblEmployee">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="IDJobPosition" ColumnName="IDJobPosition" />
+                <ScalarProperty Name="IDDepartment" ColumnName="IDDepartment" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="IDEmployee" ColumnName="IDEmployee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblJobPosition">
+            <EntityTypeMapping TypeName="EmployeeModel.TblJobPosition">
+              <MappingFragment StoreEntitySet="TblJobPosition">
+                <ScalarProperty Name="JobPosition" ColumnName="JobPosition" />
+                <ScalarProperty Name="IDJobPosition" ColumnName="IDJobPosition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblProject">
+            <EntityTypeMapping TypeName="EmployeeModel.TblProject">
+              <MappingFragment StoreEntitySet="TblProject">
+                <ScalarProperty Name="IDEmployee" ColumnName="IDEmployee" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="IDProject" ColumnName="IDProject" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

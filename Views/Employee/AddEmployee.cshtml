@@ -1,0 +1,79 @@
+﻿@model EmployeeManagementSystem.Models.TblEmployee
+@{
+    ViewBag.Title = "AddEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Employee Page</h2>
+
+
+<link href="~/Content/StyleSheet.css" rel="stylesheet" />
+<br />
+@using (Html.BeginForm("AddEmployee", "Employee", FormMethod.Post))
+{
+    <div class="left">
+
+
+        <div class="form-group">
+            <label>First Name</label>
+            <input class="form-control" name="FirstName" id="FirstName" style="width:250px" />
+
+        </div>
+        <div class="form-group">
+            <label>Middle Name</label>
+            <input class="form-control" name="MiddleName" id="MiddleName" style="width:250px" />
+
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input class="form-control" name="LastName" id="LastName" style="width:250px" />
+
+        </div>
+        <div class="form-group">
+            <label>Salary</label>
+            <input class="form-control" name="Salary" id="Salary" style="width:250px" />
+
+        </div>
+        <div class="form-group">
+            <label>Birthday</label>
+            <input class="form-control" name="Birthday" id="Birthday" style="width:250px" />
+
+        </div>
+      
+    </div>
+    <div class="right">
+
+
+        <div class="form-group">
+            <label>Address</label>
+            <input class="form-control" name="Address" id="Address" style="width:250px" />
+
+        </div>
+
+        <div class="form-group">
+            <label>Gender</label>
+            <input class="form-control" name="Gender" id="Gender" style="width:250px" />
+
+        </div>
+        <br />
+        <div>
+            <label>Department</label>
+            @Html.DropDownListFor(x => x.IDDepartment, (List<SelectListItem>)ViewBag.valueDep, "Select Department", new { @style = "width:250px", @class = "form-control" })
+
+        </div>
+        <br />
+
+        <div>
+            <label>Position</label>
+            @Html.DropDownListFor(x => x.IDJobPosition, (List<SelectListItem>)ViewBag.valueJob, "Select Position", new { @style = "width:250px", @class = "form-control" })
+
+        </div>
+        <br />
+
+        <button class="btn btn-info" id="save1">Save</button>
+    </div>
+
+
+}
+
+

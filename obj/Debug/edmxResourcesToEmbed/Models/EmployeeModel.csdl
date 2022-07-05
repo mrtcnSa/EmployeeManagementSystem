@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EmployeeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="EmployeeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TblDepartment" EntityType="EmployeeModel.TblDepartment" />
+    <EntitySet Name="TblEmployee" EntityType="EmployeeModel.TblEmployee" />
+    <EntitySet Name="TblJobPosition" EntityType="EmployeeModel.TblJobPosition" />
+    <EntitySet Name="TblProject" EntityType="EmployeeModel.TblProject" />
+    <AssociationSet Name="FK_TblEmployee_TblDepartment" Association="EmployeeModel.FK_TblEmployee_TblDepartment">
+      <End Role="TblDepartment" EntitySet="TblDepartment" />
+      <End Role="TblEmployee" EntitySet="TblEmployee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TblEmployee_TblJobPosition" Association="EmployeeModel.FK_TblEmployee_TblJobPosition">
+      <End Role="TblJobPosition" EntitySet="TblJobPosition" />
+      <End Role="TblEmployee" EntitySet="TblEmployee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TblProject_TblEmployee" Association="EmployeeModel.FK_TblProject_TblEmployee">
+      <End Role="TblEmployee" EntitySet="TblEmployee" />
+      <End Role="TblProject" EntitySet="TblProject" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TblDepartment">
+    <Key>
+      <PropertyRef Name="IDDepartment" />
+    </Key>
+    <Property Name="IDDepartment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TblEmployee" Relationship="EmployeeModel.FK_TblEmployee_TblDepartment" FromRole="TblDepartment" ToRole="TblEmployee" />
+  </EntityType>
+  <EntityType Name="TblEmployee">
+    <Key>
+      <PropertyRef Name="IDEmployee" />
+    </Key>
+    <Property Name="IDEmployee" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Salary" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="IDDepartment" Type="Int32" />
+    <Property Name="IDJobPosition" Type="Int32" />
+    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="TblDepartment" Relationship="EmployeeModel.FK_TblEmployee_TblDepartment" FromRole="TblEmployee" ToRole="TblDepartment" />
+    <NavigationProperty Name="TblJobPosition" Relationship="EmployeeModel.FK_TblEmployee_TblJobPosition" FromRole="TblEmployee" ToRole="TblJobPosition" />
+    <NavigationProperty Name="TblProject" Relationship="EmployeeModel.FK_TblProject_TblEmployee" FromRole="TblEmployee" ToRole="TblProject" />
+  </EntityType>
+  <EntityType Name="TblJobPosition">
+    <Key>
+      <PropertyRef Name="IDJobPosition" />
+    </Key>
+    <Property Name="IDJobPosition" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JobPosition" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TblEmployee" Relationship="EmployeeModel.FK_TblEmployee_TblJobPosition" FromRole="TblJobPosition" ToRole="TblEmployee" />
+  </EntityType>
+  <EntityType Name="TblProject">
+    <Key>
+      <PropertyRef Name="IDProject" />
+    </Key>
+    <Property Name="IDProject" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IDEmployee" Type="Int32" />
+    <NavigationProperty Name="TblEmployee" Relationship="EmployeeModel.FK_TblProject_TblEmployee" FromRole="TblProject" ToRole="TblEmployee" />
+  </EntityType>
+  <Association Name="FK_TblEmployee_TblDepartment">
+    <End Type="EmployeeModel.TblDepartment" Role="TblDepartment" Multiplicity="0..1" />
+    <End Type="EmployeeModel.TblEmployee" Role="TblEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblDepartment">
+        <PropertyRef Name="IDDepartment" />
+      </Principal>
+      <Dependent Role="TblEmployee">
+        <PropertyRef Name="IDDepartment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TblEmployee_TblJobPosition">
+    <End Type="EmployeeModel.TblJobPosition" Role="TblJobPosition" Multiplicity="0..1" />
+    <End Type="EmployeeModel.TblEmployee" Role="TblEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblJobPosition">
+        <PropertyRef Name="IDJobPosition" />
+      </Principal>
+      <Dependent Role="TblEmployee">
+        <PropertyRef Name="IDJobPosition" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TblProject_TblEmployee">
+    <End Type="EmployeeModel.TblEmployee" Role="TblEmployee" Multiplicity="0..1" />
+    <End Type="EmployeeModel.TblProject" Role="TblProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TblEmployee">
+        <PropertyRef Name="IDEmployee" />
+      </Principal>
+      <Dependent Role="TblProject">
+        <PropertyRef Name="IDEmployee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

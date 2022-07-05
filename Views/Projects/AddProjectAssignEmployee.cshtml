@@ -1,0 +1,29 @@
+﻿@model EmployeeManagementSystem.Models.TblProject
+@{
+    ViewBag.Title = "AddProjectAssignEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Project and Assign Employee</h2>
+
+
+@using (Html.BeginForm("AddProjectAssignEmployee", "Projects", FormMethod.Post))
+{
+
+
+    <div class="form-group">
+        <label>Project Name</label>
+        <input class="form-control" name="ProjectName" id="ProjectName" style="width:250px" />
+
+    </div>
+    <div>
+        <label>Assign Employee</label>
+        @Html.DropDownListFor(x => x.IDEmployee, (List<SelectListItem>)ViewBag.valueEmp, "Select Employee", new { @style = "width:250px", @class = "form-control" })
+
+    </div>
+
+    <br />
+
+    <button class="btn btn-info" id="save1">Save</button>
+
+}

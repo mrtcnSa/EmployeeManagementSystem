@@ -1,0 +1,43 @@
+﻿@model EmployeeManagementSystem.Models.TblEmployee
+@{
+    ViewBag.Title = "EditEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Employee Page</h2>
+
+@using (Html.BeginForm("EditEmployee", "Employee", FormMethod.Post))
+{
+    <div class="form-group">
+
+        @Html.HiddenFor(x=>x.IDEmployee)
+        @Html.Label("First Name")
+        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+
+        <br />
+        @Html.Label("Middle Name")
+        @Html.TextBoxFor(x => x.MiddleName, new { @class = "form-control" })
+        <br />
+        @Html.Label("Last Name")
+        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+        <br />
+        @Html.Label("Salary")
+        @Html.TextBoxFor(x => x.Salary, new { @class = "form-control" })
+        <br />
+        @Html.Label("Birthday")
+        @Html.TextBoxFor(x => x.Birthday, new { @class = "form-control" })
+        <br />
+        @Html.Label("Address")
+        @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
+        <br />
+        @Html.Label("Gender")
+        @Html.TextBoxFor(x => x.Gender, new { @class = "form-control" })
+        <br />
+        @Html.Label("Department")
+        @Html.DropDownListFor(x => x.IDDepartment, (List<SelectListItem>)ViewBag.valueDep, new { @class = "form-control" })
+        <br />
+        @Html.Label("Job Position")
+        @Html.DropDownListFor(x => x.IDJobPosition, (List<SelectListItem>)ViewBag.valueJob, new { @class = "form-control" })
+        <br />
+        <button class="btn btn-success">Güncelle</button>
+    </div>}
